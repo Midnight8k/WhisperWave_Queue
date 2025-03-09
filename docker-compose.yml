@@ -1,0 +1,39 @@
+services:
+  whisperwave:
+    container_name: whisperwave
+    hostname: whisperwave
+    build:
+      context: .
+      dockerfile: Dockerfile.whisperwave
+    ports:
+      - 2000:2000
+    networks:
+      - ntfynet
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    hostname: rabbitmq
+    container_name: rabbitmq
+    build:
+      context: .
+      dockerfile: Dockerfile.rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://rabbitmq:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    volumes:
+        - rabbitmq_data_container:/var/lib/rabbitmq/
+        - rabbitmq_config_container:/var/log/rabbitmq
+    networks:
+        - ntfynet
+
+volumes:
+  rabbitmq_data_container:
+  rabbitmq_config_container:
+
+networks:
+  ntfynet:
