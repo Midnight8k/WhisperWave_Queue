@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "my-queue"
+version = "0.1.0"
+description = ""
+authors = ["midnight8k <midnight8k@sapo.pt>"]
+readme = "README.md"
+packages = [
+    { include = "my_queue/*.py" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^3.0.2"
+pika = "^1.3.2"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^6.0.0"
+pytest-mock = "*"
+pytest-cov = "^5.0.0"
+
+[tool.poetry.scripts]
+my-queue = "my_queue.start:start"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
